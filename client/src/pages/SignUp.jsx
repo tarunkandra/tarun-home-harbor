@@ -45,7 +45,7 @@ export default function SignUp() {
       <form onSubmit={handleSubmit} className='flex flex-col gap-4'>
         <input
           type='text'
-          placeholder='username'
+          placeholder='email and phone number to contact'
           className='border p-3 rounded-lg'
           id='username'
           onChange={handleChange}

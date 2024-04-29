@@ -54,6 +54,13 @@ const listingSchema = new mongoose.Schema(
       type: String,
       required: true,
     },
+    // New star rating field
+    starRating: {
+      type: Number,
+      min: 0,
+      max: 5,
+      default: 0,
+    },
   },
   { timestamps: true }
 );

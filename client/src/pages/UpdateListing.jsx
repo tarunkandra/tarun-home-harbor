@@ -179,7 +179,7 @@ export default function CreateListing() {
           <input
             type='text'
             placeholder='Name'
-            className='border p-3 rounded-lg'
+            className='border border-red-300 p-3 rounded-lg'
             id='name'
             maxLength='62'
             minLength='10'

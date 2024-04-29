@@ -50,3 +50,34 @@ app.use((err, req, res, next) => {
     message,
   });
 });
+
+app.post('/updateRating', (req, res) => {
+  const { name, rating } = req.body;
+  House.findOneAndUpdate({ name: name }, { rating: rating }, (err, house) => {
+    if (err) {
+      res.status(500).send(err);
+    } else {
+      res.status(200).send(house);
+    }
+  });
+});
+app.post('/search', (req, res) => {
+  const { location } = req.body;
+  House.find({ location: location }, (err, houses) => {
+    if (err) {
+      res.status(500).send(err);
+    } else {
+      Rating.find({ name: { $in: houses.map(house => house.name) } }, (err, ratings) => {
+        if (err) {
+          res.status(500).send(err);
+        } else {
+          houses = houses.map(house => {
+            const rating = ratings.find(rating => rating.name === house.name);
+            return { ...house._doc, rating: rating ? rating.rating : 0 };
+          });
+          res.status(200).send(houses);
+        }
+      });
+    }
+  });
+});

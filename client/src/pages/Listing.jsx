@@ -13,10 +13,9 @@ import {
   FaMapMarkerAlt,
   FaParking,
   FaShare,
+  FaStar,
 } from 'react-icons/fa';
 import Contact from '../components/Contact';
-
-// https://sabe.io/blog/javascript-format-numbers-commas#:~:text=The%20best%20way%20to%20format,format%20the%20number%20with%20commas.
 
 export default function Listing() {
   SwiperCore.use([Navigation]);
@@ -27,6 +26,8 @@ export default function Listing() {
   const [contact, setContact] = useState(false);
   const params = useParams();
   const { currentUser } = useSelector((state) => state.user);
+  const [rating, setRating] = useState(null);
+  const [submitted, setSubmitted] = useState(false);
 
   useEffect(() => {
     const fetchListing = async () => {
@@ -49,6 +50,17 @@ export default function Listing() {
     };
     fetchListing();
   }, [params.listingId]);
+
+  const handleRatingClick = (value) => {
+    setRating(value);
+  };
+
+  const handleSubmitRating = () => {
+    if (rating) {
+      alert(`Rating submitted: ${rating}`);
+      setSubmitted(true);
+    }
+  };
 
   return (
     <main>
@@ -136,10 +148,31 @@ export default function Listing() {
                 {listing.furnished ? 'Furnished' : 'Unfurnished'}
               </li>
             </ul>
+            <div className='flex justify-center items-center my-5'>
+              {[...Array(5)].map((_, index) => (
+                <FaStar
+                  key={index}
+                  className='text-yellow-600'
+                  size={20}
+                  color={index < rating ? '#FFD700' : '#C4C4C4'}
+                  style={{ marginLeft: '5px', marginRight: '5px' }}
+                  onClick={() => handleRatingClick(index + 1)}
+                />
+              ))}
+            </div>
+            <div className='flex justify-center'>
+              <button
+                className={`bg-slate-800 text-white rounded-lg uppercase hover:opacity-95 p-3 ${!rating || submitted ? 'pointer-events-none opacity-50 cursor-not-allowed' : ''}`}
+                onClick={handleSubmitRating}
+                disabled={!rating || submitted}
+              >
+                Submit
+              </button>
+            </div>
             {currentUser && listing.userRef !== currentUser._id && !contact && (
               <button
                 onClick={() => setContact(true)}
-                className='bg-slate-700 text-white rounded-lg uppercase hover:opacity-95 p-3'
+                className='bg-slate-800 text-white rounded-lg uppercase hover:opacity-95 p-3 mt-4'
               >
                 Contact landlord
               </button>
@@ -151,3 +184,4 @@ export default function Listing() {
     </main>
   );
 }
+

@@ -1,7 +1,19 @@
 import { Link } from 'react-router-dom';
 import { MdLocationOn } from 'react-icons/md';
+import { FaStar } from 'react-icons/fa';
 
 export default function ListingItem({ listing }) {
+  // Helper function to render star ratings
+  const renderStars = (rating) => {
+    let stars = [];
+    for (let i = 1; i <= 4; i++) {
+      stars.push(
+        <FaStar key={i} color={i <= rating ? 'yellow' : 'yellow'} />
+      );
+    }
+    return stars;
+  };
+
   return (
     <div className='bg-white shadow-md hover:shadow-lg transition-shadow overflow-hidden rounded-lg w-full sm:w-[330px]'>
       <Link to={`/listing/${listing._id}`}>
@@ -22,6 +34,9 @@ export default function ListingItem({ listing }) {
             <p className='text-sm text-gray-600 truncate w-full'>
               {listing.address}
             </p>
+          </div>
+          <div className='flex items-center'>
+            {renderStars(listing.starRating)}
           </div>
           <p className='text-sm text-gray-600 line-clamp-2'>
             {listing.description}
