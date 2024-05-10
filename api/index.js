@@ -25,6 +25,11 @@ const app = express();
 app.use(express.json());
 
 app.use(cookieParser());
+// Enable CORS for the updated frontend URL
+app.use(cors({
+  origin: 'https://super-biscotti-c43f7f.netlify.app',
+  optionsSuccessStatus: 200
+}));
 
 app.listen(3000, () => {
   console.log('Server is running on port 3000!');
