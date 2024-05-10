@@ -6,7 +6,7 @@ import authRouter from './routes/auth.route.js';
 import listingRouter from './routes/listing.route.js';
 import cookieParser from 'cookie-parser';
 import path from 'path';
-import cors from 'cors';
+
 dotenv.config();
 const str="mongodb+srv://Tarun_kandra_7:kandra123@cluster0.uispxff.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0"
 
@@ -27,10 +27,13 @@ app.use(express.json());
 
 app.use(cookieParser());
 // Enable CORS for the updated frontend URL
-app.use(cors({
-  origin: 'https://super-biscotti-c43f7f.netlify.app',
-  optionsSuccessStatus: 200
-}));
+app.use((req, res, next) => {
+  res.setHeader('Access-Control-Allow-Origin', 'https://super-biscotti-c43f7f.netlify.app');
+  res.setHeader('Access-Control-Allow-Methods', 'GET, POST, PUT, DELETE');
+  res.setHeader('Access-Control-Allow-Headers', 'Content-Type, Authorization');
+  next();
+});
+
 
 app.listen(3000, () => {
   console.log('Server is running on port 3000!');
