@@ -6,6 +6,7 @@ import authRouter from './routes/auth.route.js';
 import listingRouter from './routes/listing.route.js';
 import cookieParser from 'cookie-parser';
 import path from 'path';
+import cors from 'cors';
 dotenv.config();
 const str="mongodb+srv://Tarun_kandra_7:kandra123@cluster0.uispxff.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0"
 
